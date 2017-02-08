@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -24,9 +25,13 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         SwipeRefreshLayout.OnRefreshListener,
@@ -116,18 +121,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         new AddStockDialog().show(getFragmentManager(), "StockDialogFragment");
     }
 
-    void addStock(String symbol) {
+    public void checkStock(String symbol) {
         if (symbol != null && !symbol.isEmpty()) {
+            new QuoteCheckTask().execute(symbol);
 
-            if (networkUp()) {
+        }
+    }
+
+    public void addStock(Boolean isValidStock, String symbol) {
+        if (networkUp()) {
+            if (isValidStock) {
                 swipeRefreshLayout.setRefreshing(true);
+                PrefUtils.addStock(this, symbol);
+                QuoteSyncJob.syncImmediately(this);
             } else {
-                String message = getString(R.string.toast_stock_added_no_connectivity, symbol);
+                String message = getString(R.string.toast_bad_stock_symbol, symbol);
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
-
-            PrefUtils.addStock(this, symbol);
-            QuoteSyncJob.syncImmediately(this);
+        } else {
+            String message = getString(R.string.toast_stock_added_no_connectivity, symbol);
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -185,5 +198,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class QuoteCheckTask extends AsyncTask<String, Void, Boolean> {
+        String symbol;
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            symbol = params[0];
+            try {
+                Stock stock = YahooFinance.get(symbol);
+                return stock.getName() != null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            addStock(result, symbol);
+        }
+
     }
 }
