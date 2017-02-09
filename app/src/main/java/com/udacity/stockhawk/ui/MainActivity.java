@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void checkStock(String symbol) {
         if (symbol != null && !symbol.isEmpty()) {
-            new QuoteCheckTask().execute(symbol);
+            new IsValidQuoteSymbolTask().execute(symbol);
 
         }
     }
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
-    private class QuoteCheckTask extends AsyncTask<String, Void, Boolean> {
+    private class IsValidQuoteSymbolTask extends AsyncTask<String, Void, Boolean> {
         String symbol;
 
         @Override
