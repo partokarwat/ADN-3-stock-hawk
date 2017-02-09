@@ -2,10 +2,12 @@ package com.udacity.stockhawk.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 
 import com.udacity.stockhawk.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,23 +26,32 @@ public final class PrefUtils {
      */
     public static Set<String> getStocks(Context context) {
         String stocksKey = context.getString(R.string.pref_stocks_key);
-        String initializedKey = context.getString(R.string.pref_stocks_initialized_key);
-        String[] defaultStocksList = context.getResources().getStringArray(R.array.default_stocks);
-
-        HashSet<String> defaultStocks = new HashSet<>(Arrays.asList(defaultStocksList));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
+        // load stocks from database, if empty database cursor is null
+        Cursor cursor = context.getContentResolver().query(
+                Contract.Quote.URI,
+                new String[] {Contract.Quote.COLUMN_SYMBOL},
+                null,
+                null,
+                null
+        );
 
-        boolean initialized = prefs.getBoolean(initializedKey, false);
+        if (cursor == null || cursor.getCount() == 0) {
+            //show default stocks
+            String[] defaultStocksList = context.getResources().getStringArray(R.array.default_stocks);
+            return prefs.getStringSet(stocksKey, new HashSet<>(Arrays.asList(defaultStocksList)));
+        } else {
+            //show stocks from database
+            ArrayList<String> data = new ArrayList<>();
+            while(cursor.moveToNext()){
+                data.add(cursor.getString(0)); //always get the row element of the 1 column table
+            }
+            cursor.close();
 
-        if (!initialized) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean(initializedKey, true);
-            editor.putStringSet(stocksKey, defaultStocks);
-            editor.apply();
-            return defaultStocks;
+            HashSet<String> stocks = new HashSet<>(data);
+            return prefs.getStringSet(stocksKey, stocks);
         }
-        return prefs.getStringSet(stocksKey, new HashSet<String>());
 
     }
 
