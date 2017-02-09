@@ -15,6 +15,13 @@ public final class PrefUtils {
     private PrefUtils() {
     }
 
+    /**
+     * Helper method to get the stocks of the Database, or create default stocks
+     * if the database is empty.
+     *
+     * @param context The context used to access the stocks
+     * @return the stock symbols
+     */
     public static Set<String> getStocks(Context context) {
         String stocksKey = context.getString(R.string.pref_stocks_key);
         String initializedKey = context.getString(R.string.pref_stocks_initialized_key);
