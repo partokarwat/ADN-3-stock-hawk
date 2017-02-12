@@ -65,15 +65,6 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
     @Override
     public void onBindViewHolder(StockViewHolder holder, int position) {
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class)
-                        .setData(Contract.Quote.makeUriForStock(cursor.getString(Contract.Quote.POSITION_SYMBOL)));
-                context.startActivity(intent);
-            }
-        });
-
         cursor.moveToPosition(position);
 
 
@@ -140,6 +131,10 @@ class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockViewHolder> {
             cursor.moveToPosition(adapterPosition);
             int symbolColumn = cursor.getColumnIndex(Contract.Quote.COLUMN_SYMBOL);
             clickHandler.onClick(cursor.getString(symbolColumn));
+
+            Intent intent = new Intent(context, DetailActivity.class)
+                    .setData(Contract.Quote.makeUriForStock(cursor.getString(Contract.Quote.POSITION_SYMBOL)));
+            context.startActivity(intent);
 
         }
 
