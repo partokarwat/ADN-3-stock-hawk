@@ -63,8 +63,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_QUOTE_PERCENTAGE_CHANGE = 4;
     public static final int COL_QUOTE_HISTORY = 5;
 
-    private TextView testView;
+    private TextView symbolTextView;
     private LineChart mChart;
+    private TextView priceTextView;
+    private TextView absolutChangeTextView;
+    private TextView percentageChangeTextView;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -81,7 +84,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        testView = (TextView) rootView.findViewById(R.id.symbol);
+        symbolTextView = (TextView) rootView.findViewById(R.id.symbol);
+        priceTextView = (TextView) rootView.findViewById(R.id.detail_price_textview);
+        absolutChangeTextView = (TextView) rootView.findViewById(R.id.detail_absolut_change_textview);
+        percentageChangeTextView = (TextView) rootView.findViewById(R.id.detail_percentage_change_textview);
 
         mChart = (LineChart) rootView.findViewById(R.id.sparkView);
 
@@ -114,7 +120,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if ( null != mUri ) {
+        if (null != mUri) {
             // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
             return new CursorLoader(
@@ -133,7 +139,11 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null && data.moveToFirst()) {
             String symbol = data.getString(COL_QUOTE_SYMBOL);
-            testView.setText(symbol);
+            symbolTextView.setText(symbol);
+
+            priceTextView.setText(getString(R.string.value_with_dollar, data.getString(COL_QUOTE_PRICE)));
+            absolutChangeTextView.setText(getString(R.string.value_with_dollar, data.getString(COL_QUOTE_ABSOLUTE_CHANGE)));
+            percentageChangeTextView.setText(getString(R.string.value_with_percent, data.getString(COL_QUOTE_PERCENTAGE_CHANGE)));
 
             String history = data.getString(COL_QUOTE_HISTORY);
             String[] points = history.split("\n");
@@ -185,7 +195,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             xAxis.setTextSize(10f);
             xAxis.setTextColor(Color.WHITE);
             xAxis.setDrawAxisLine(false);
-            xAxis.setDrawGridLines(true);
+            xAxis.setDrawGridLines(false);
             xAxis.setTextColor(getResources().getColor(R.color.textColorChartAxis));
             xAxis.setCenterAxisLabels(true);
             xAxis.setGranularity(1f); // one hour
@@ -206,7 +216,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             leftAxis.enableGridDashedLine(10f, 10f, 0f);
             leftAxis.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
             leftAxis.setTextColor(ColorTemplate.getHoloBlue());
-            leftAxis.setDrawGridLines(true);
+            leftAxis.setDrawGridLines(false);
             leftAxis.setGranularityEnabled(true);
             leftAxis.setAxisMinimum(0f);
             leftAxis.setAxisMaximum(Collections.max(values, new EntryXComparator()).getY() + Collections.min(values, new EntryXComparator()).getY());
@@ -223,5 +233,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) { }
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 }

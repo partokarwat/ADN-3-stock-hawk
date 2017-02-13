@@ -36,4 +36,10 @@
     <string name="title_activity_detail" translatable="false">Details</string>
     <string name="spark_line_label" translatable="false">DataSet 1</string>
 
+    <string name="price">Price</string>
+    <string name="absolut_change">Absolut change</string>
+    <string name="percentage_change">Percentage change</string>
+    <string name="value_with_dollar">$ %s</string>
+    <string name="value_with_percent">%s %%</string>
+
 </resources>

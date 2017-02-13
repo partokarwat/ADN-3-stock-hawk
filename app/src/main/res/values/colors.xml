@@ -5,9 +5,14 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="textColorChartAxis">#FFC038</color>
+    <color name="secondary_text">#727272</color>
 
     <color name="material_blue_500">#2196F3</color>
     <color name="material_red_700">#D50000</color>
     <color name="material_green_700">#00C853</color>
+
+    <!-- our detail accent colors -->
+    <color name="detail_accent_pane_background">#455A64</color>
+    <color name="detail_accent_label">#90A4AE</color>
 
 </resources>

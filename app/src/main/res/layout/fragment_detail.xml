@@ -1,18 +1,98 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     tools:context="com.udacity.stockhawk.ui.DetailFragment">
 
     <TextView
         android:id="@+id/symbol"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/abc_list_item_padding_horizontal_material"
+        android:layout_marginTop="@dimen/abc_list_item_padding_horizontal_material"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/secondary_text" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/sparkView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+        android:layout_height="250dp" />
 
-</FrameLayout>
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/detail_additional_pane"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/detail_accent_pane_background"
+        android:paddingBottom="@dimen/abc_list_item_padding_horizontal_material"
+        android:paddingEnd="@dimen/stock_detail_horizontal_padding"
+        android:paddingLeft="@dimen/stock_detail_horizontal_padding"
+        android:paddingRight="@dimen/stock_detail_horizontal_padding"
+        android:paddingStart="@dimen/stock_detail_horizontal_padding"
+        android:paddingTop="@dimen/abc_list_item_padding_horizontal_material"
+        app:columnCount="2">
+
+        <TextView
+            android:id="@+id/detail_price_label_textview"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="@string/price"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/detail_accent_label"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <TextView
+            android:id="@+id/detail_price_textview"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:layout_gravity="fill"
+            tools:text="38%" />
+
+        <TextView
+            android:id="@+id/detail_absolut_change_label_textview"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="@string/absolut_change"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@color/detail_accent_label"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+        <TextView
+            android:id="@+id/detail_absolut_change_textview"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:layout_gravity="fill"
+            tools:text="995 hPa" />
+
+        <TextView
+            android:id="@+id/detail_percentage_change_label_textview"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="@string/percentage_change"
+            android:textColor="@color/detail_accent_label"
+            android:textSize="20sp"
+            app:layout_gravity="fill"
+            app:layout_rowWeight="1" />
+
+
+        <TextView
+            android:id="@+id/detail_percentage_change_textview"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            app:layout_gravity="fill"
+            tools:text="4km/h NW" />
+    </android.support.v7.widget.GridLayout>
+
+</LinearLayout>
