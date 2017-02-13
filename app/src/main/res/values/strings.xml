@@ -33,7 +33,7 @@
     <string name="toast_no_connectivity">Will refresh when network available.</string>
     <string name="toast_bad_stock_symbol">No Stock for symbol %s. Try an other one.</string>
 
-    <string name="title_activity_detail">Details</string>
+    <string name="title_activity_detail" translatable="false">Details</string>
     <string name="spark_line_label" translatable="false">DataSet 1</string>
 
 </resources>
