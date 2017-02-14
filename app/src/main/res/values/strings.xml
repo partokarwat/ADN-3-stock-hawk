@@ -41,5 +41,7 @@
     <string name="percentage_change">Percentage change</string>
     <string name="value_with_dollar">$ %s</string>
     <string name="value_with_percent">%s %%</string>
+    <string name="empty_stock_list">No stock information available.</string>
+    <string name="title_widget_collection">Stock Hawk Collection</string>
 
 </resources>
