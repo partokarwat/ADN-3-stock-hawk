@@ -14,7 +14,7 @@
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/abc_list_item_padding_horizontal_material"
-        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material">
+        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
 
         <TextView
             android:id="@+id/symbol"
@@ -44,8 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/percent_change_pill_green"
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
+                android:paddingLeft="@dimen/padding_stock_change"
+                android:paddingRight="@dimen/padding_stock_change"
                 tools:text="100%" />
         </LinearLayout>
     </LinearLayout>

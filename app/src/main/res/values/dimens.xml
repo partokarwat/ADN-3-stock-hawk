@@ -10,4 +10,8 @@
 
     <dimen name="text_size_widget_title">24sp</dimen>
 
+    <dimen name="padding_stock_change">3dp</dimen>
+    <dimen name="dialog_stock_margin">4dp</dimen>
+    <dimen name="dialog_stock_margin_top">16dp</dimen>
+
 </resources>
