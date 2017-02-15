@@ -21,7 +21,8 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/sparkView"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="250dp"
+        android:contentDescription="@string/content_description_fragment_detail_line_chart" />
 
     <android.support.v7.widget.GridLayout
         android:id="@+id/detail_additional_pane"

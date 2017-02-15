@@ -44,4 +44,7 @@
     <string name="empty_stock_list">No stock information available.</string>
     <string name="title_widget_collection">Stock Hawk Collection</string>
 
+    <string name="content_description_activity_main_fab">Add new stock by symbol.</string>
+    <string name="content_description_fragment_detail_line_chart">Spark view of stock history.</string>
+
 </resources>
