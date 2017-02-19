@@ -25,8 +25,6 @@ import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
 
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -209,10 +207,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             try {
                 Stock stock = YahooFinance.get(symbol);
                 return stock.getName() != null;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null;
+            return false;
         }
 
         @Override
